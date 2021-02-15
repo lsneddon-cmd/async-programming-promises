@@ -41,4 +41,21 @@ export function chainCatch(){
 }
 
 export function final(){
+  showWaiting();
+  axios.get("http://localhost:3000/orders/1")
+    .then(({data}) => {
+      return axios.get(`http://localhost:3000/addresses/${data.shippingAddress}`);
+    })
+    .then(({data}) => {
+      setText(`City: ${data.city}`);
+    })
+    .catch((error) => {
+      setText(`Error: ${error}`);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        hideWaiting();
+      }, 1500);
+      appendText(" -- Completely Done");
+    });
 }

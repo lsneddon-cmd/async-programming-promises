@@ -1,6 +1,13 @@
 import setText, { appendText } from "./results.mjs";
 
 export function timeout() {
+  const wait = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Timeout!");
+    }, 1500);
+  });
+
+  wait.then(text => setText(text));
 }
 
 export function interval() {
